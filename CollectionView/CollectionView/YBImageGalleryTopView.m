@@ -8,6 +8,14 @@
 
 #import "YBImageGalleryTopView.h"
 
+
+
+@interface YBImageGalleryTopView ()
+
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, assign) BOOL isTopViewHiden;
+@end
+
 @implementation YBImageGalleryTopView
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -21,6 +29,7 @@
 
 - (void)setupView
 {
+    _isTopViewHiden = NO;
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     backBtn.frame = CGRectMake(12, 24, 60, 40);
     [backBtn setTitle:@"返回" forState:UIControlStateNormal];
@@ -30,15 +39,74 @@
     [self addSubview:backBtn];
     
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 24, self.frame.size.width - 200, 40)];
-    titleLabel.textColor = [UIColor whiteColor];
-    titleLabel.font = [UIFont systemFontOfSize:12];
-    [self addSubview:titleLabel];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 24, self.frame.size.width - 200, 40)];
+    _titleLabel.textColor = [UIColor whiteColor];
+    _titleLabel.font = [UIFont systemFontOfSize:14];
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    [self addSubview:_titleLabel];
 }
 
 - (void)backBtnAction:(UIButton *)sender
 {
-    
+    _returnBtnCallBack ? _returnBtnCallBack():nil;
 }
+
+- (void)setTopTitle:(NSString *)topTitle
+{
+    _titleLabel.text = topTitle;
+}
+
+- (void)hideTopViewAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect frame = self.frame;
+            frame.origin.y -= frame.size.height;
+            self.frame = frame;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+    else
+    {
+        CGRect frame = self.frame;
+        frame.origin.y -= frame.size.height;
+        self.frame = frame;
+    }
+}
+
+- (void)showTopViewAnimated:(BOOL)animated
+{
+    if (animated) {
+        [UIView animateWithDuration:0.2 animations:^{
+            CGRect frame = self.frame;
+            frame.origin.y = 0;
+            self.frame = frame;
+        } completion:^(BOOL finished) {
+            
+        }];
+    }
+    else
+    {
+        CGRect frame = self.frame;
+        frame.origin.y = 0;
+        self.frame = frame;
+    }
+}
+
+
+- (void)hideOrShowTopViewAnimated:(BOOL)animated
+{
+    if (_isTopViewHiden) {
+        [self showTopViewAnimated:animated];
+        _isTopViewHiden = !_isTopViewHiden;
+    }
+    else
+    {
+        [self hideTopViewAnimated:animated];
+        _isTopViewHiden = !_isTopViewHiden;
+    }
+}
+
 
 @end

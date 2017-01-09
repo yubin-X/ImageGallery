@@ -61,7 +61,9 @@
 // 单击手势事件
 - (void)singleGestureAction
 {
-    NSLog(@"你点我了");
+    if (self.delegate && [self.delegate respondsToSelector:@selector(tapCell:atIndex:)]) {
+        [self.delegate tapCell:self atIndex:self.index];
+    }
 }
 // 双击手势事件
 - (void)doubleGestureAction

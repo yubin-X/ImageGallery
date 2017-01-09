@@ -44,6 +44,7 @@
 @property (nonatomic, strong) UIColor *backgroundColor;
 @property (nonatomic, weak) id<YBImageGalleryViewDataSource> dataSource;
 @property (nonatomic, weak) id<YBImageGalleryViewDelegate> delegate;
+@property (nonatomic, strong) UIColor *topViewBackgroundColor;
 
 - (void)reloadData;
 

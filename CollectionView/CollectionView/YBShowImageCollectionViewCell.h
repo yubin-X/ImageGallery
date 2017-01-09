@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
+@class YBShowImageCollectionViewCell;
+@protocol YBShowImageCollectionViewCellDelegate <NSObject>
+
+- (void)tapCell:(YBShowImageCollectionViewCell *)cell atIndex:(NSInteger)index;
+
+@end
+
 @interface YBShowImageCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic,assign) NSInteger index;
+@property (nonatomic, weak) id<YBShowImageCollectionViewCellDelegate> delegate;
 @property (nonatomic,strong) UIScrollView *scrollView;
 @property (nonatomic,strong) UIImageView *imageView;
 @property (nonatomic,strong) UIImage *image;
